@@ -2,10 +2,10 @@
 // Produce MFM data
 //
 module MFM_data(clk50, index_l, data_h);
-   input wire clk50;
-   input wire index_l;
+	input wire clk50;
+	input wire index_l;
 
-   output reg data_h;
+	output reg data_h;
 
 	// A bit-cell is 200ns wide (10 50MHz cycles)
 	reg [7:0] bit_cell_delay;
@@ -16,8 +16,8 @@ module MFM_data(clk50, index_l, data_h);
 	reg [15:0] mfm_data;
 	// The number of charactrs in our MFM data buffer
 	reg [7:0] char_count;
-	   
-   initial begin
+
+	initial begin
 		data_h <= 0;
 
 		bit_cell_delay <= 8'd8;
@@ -31,18 +31,18 @@ module MFM_data(clk50, index_l, data_h);
 			// We've reached the start of a new bit cell. Set up the
 			// delay for this cell.
 			bit_cell_delay <= 8'd8;
-			
+
 			// We've also reached the start of a new mfm pulse. Set 
 			// up the delay for the pulse. We'll mask against the high
 			// bit of this delay, so we set the value so that the high
 			// bit goes low after exactly 5 ticks, and will stay low
 			// through the whole bit cell.
 			mfm_pulse_delay <= 8'h84;
-			
+
 			// Shift out the next position in the bufer
 			mfm_data <= mfm_data << 1;
 			char_count <= char_count - 8'd1;
-			
+
 			if (char_count[7]) begin
 				char_count <= 8'd14;
 				mfm_data <= 16'h24A9;
@@ -54,5 +54,5 @@ module MFM_data(clk50, index_l, data_h);
 
 		data_h <= mfm_data[15] & mfm_pulse_delay[7];
 	end
-	 
+ 
 endmodule

@@ -12,19 +12,19 @@ module mfm_emulator_test();
 
 	MFM_data mfm_data(.clk50 (clk50), .index_l (index_l), .data_h (data_h));
 
-   initial begin
-      clk50 <= 1;
-   end
+	initial begin
+		clk50 <= 1;
+	end
 
-   // Simulate a clock
-   always begin
-      #10;
-      clk50 = !clk50;
-   end
+	// Simulate a clock
+	always begin
+		#10;
+		clk50 = !clk50;
+	end
 
-   initial begin
-      #100000;
+	initial begin
+		#100000;
 		$stop;
-   end
+	end
 
 endmodule
